@@ -83,16 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <?php
-                    if (isset($_SESSION['username'])) {
-                        $username = $_SESSION['username'];
-                        echo "Hi, $username";
-                    } else {
-                        echo '<a class="btn btn-outline-success" onclick="redirect()">Login</a>';
-                    }
-                    ?>
-                </form>
             </div>
         </div>
     </nav>
@@ -123,13 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Container to display response messages -->
     <div id="responseContainer"></div>
-
-    <!-- Script -->
-    <script>
-        function redirect() {
-            window.location.href = "login.php";
-        }
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 

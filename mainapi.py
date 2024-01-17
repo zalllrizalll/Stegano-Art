@@ -1,4 +1,3 @@
-import hashlib
 import qrcode
 from PIL import Image
 from Crypto.Cipher import AES
@@ -22,12 +21,6 @@ def text_to_binary(text):
     for char in text:
         binary_result += format(ord(char), '08b')
     return binary_result
-
-
-def generate_hash(data):
-    sha256 = hashlib.sha256()
-    sha256.update(data)
-    return sha256.hexdigest()
 
 
 def encode_lsb(img, owner_name, creation_year, email, social_media_url, encryption_key):
