@@ -29,6 +29,7 @@ if (isset($_GET['id'])) {
 
     if (mysqli_query($connection, $sql)) {
         echo "Record deleted successfully";
+        header("Location: ./akun.php");
     } else {
         echo "Error deleting record: " . mysqli_error($connection);
     }
