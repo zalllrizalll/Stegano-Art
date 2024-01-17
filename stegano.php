@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+// Check if user is logged in
+if (!isset($_SESSION['username'])) {
+    header("Location: ./login.php");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $owner_name = $_POST['owner_name'];
     $creation_year = $_POST['creation_year'];
@@ -118,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="./stegano.php">Steganografi</a></li>
-                            <li><a class="dropdown-item" href="#">Verifikasi</a></li>
+                            <li><a class="dropdown-item" href="./verifikasi.php">Verifikasi</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

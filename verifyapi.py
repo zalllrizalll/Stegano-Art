@@ -26,11 +26,11 @@ def decode_lsb(img, decryption_key):
     delimiter_index = binary_message.find('1111111111111110')
     binary_message = binary_message[:delimiter_index]
 
-    # Split binary_message into parts for owner_name, creation_year, email, and social_media_url
-    owner_name_size = 128  # Assuming 128 bits for owner_name
-    creation_year_size = 128  # Assuming 128 bits for creation_year
-    email_size = 256  # Assuming 256 bits for email
-    social_media_url_size = 256  # Assuming 256 bits for social_media_url
+    # Calculate sizes based on the lengths of binary messages
+    owner_name_size = len(binary_message) // 4  # Assuming 4 fields
+    creation_year_size = len(binary_message) // 4
+    email_size = len(binary_message) // 4
+    social_media_url_size = len(binary_message) // 4
 
     owner_name_binary = binary_message[:owner_name_size]
     creation_year_binary = binary_message[owner_name_size:(
@@ -42,29 +42,29 @@ def decode_lsb(img, decryption_key):
 
     # Decrypt owner_name, creation_year, email, and social_media_url
     decrypted_owner_name = decrypt_data(
-        int(owner_name_binary, 2).to_bytes(16, byteorder='big'), decryption_key)
+        int(owner_name_binary, 2).to_bytes(owner_name_size // 8, byteorder='big'), decryption_key)
     decrypted_creation_year = decrypt_data(
-        int(creation_year_binary, 2).to_bytes(16, byteorder='big'), decryption_key)
+        int(creation_year_binary, 2).to_bytes(creation_year_size // 8, byteorder='big'), decryption_key)
     decrypted_email = decrypt_data(
-        int(email_binary, 2).to_bytes(32, byteorder='big'), decryption_key)
+        int(email_binary, 2).to_bytes(email_size // 8, byteorder='big'), decryption_key)
     decrypted_social_media_url = decrypt_data(
-        int(social_media_url_binary, 2).to_bytes(32, byteorder='big'), decryption_key)
+        int(social_media_url_binary, 2).to_bytes(social_media_url_size // 8, byteorder='big'), decryption_key)
 
     return decrypted_owner_name, int(decrypted_creation_year), decrypted_email, decrypted_social_media_url
 
 
-@app.route('/decrypt', methods=['POST'])
+@app.route('/decode', methods=['POST'])
 def decrypt_image():
     try:
         # Get the input data from the request
         image_file = request.files['image']
         img = Image.open(image_file)
-        decryption_key_hex = request.form['decryption_key']
-        decryption_key = bytes.fromhex(decryption_key_hex)
+        encryption_key_hex = request.form['encryption_key']
+        encryption_key = bytes.fromhex(encryption_key_hex)
 
         # Decrypt the image
         decrypted_owner_name, decrypted_creation_year, decrypted_email, decrypted_social_media_url = decode_lsb(
-            img, decryption_key)
+            img, encryption_key)
 
         return jsonify({
             "status": "success",

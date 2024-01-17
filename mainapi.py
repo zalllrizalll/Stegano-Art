@@ -91,7 +91,7 @@ def encode_image():
         image_file = request.files['image']
         img = Image.open(image_file)
         owner_name = request.form['owner_name']
-        creation_year = int(request.form['creation_year'])
+        creation_year = request.form['creation_year']
         email = request.form['email']
         social_media_url = request.form['social_media_url']
         encryption_key = get_random_bytes(16)

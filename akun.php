@@ -1,3 +1,52 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['username'])) {
+    header("Location: ./login.php");
+    exit;
+}
+
+// change password, berdasarkan username
+// Handle password change
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $newPassword = $_POST['new_password'];
+
+    // Connect to the database
+    $username = "root";
+    $password = "";
+    $database = "stegano";
+    $hostname = "localhost";
+
+    $connection = mysqli_connect($hostname, $username, $password, $database);
+
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Get the current username from the session
+    $username = $_SESSION['username'];
+
+    // Hash the new password
+    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+    // Update the password in the database
+    $sql = "UPDATE users SET password = '$hashedPassword' WHERE username = '$username'";
+    $result = mysqli_query($connection, $sql);
+
+    if ($result) {
+        echo "Password changed successfully!";
+    } else {
+        echo "Error updating password: " . mysqli_error($connection);
+    }
+
+    // Close the database connection
+    mysqli_close($connection);
+    exit;
+}
+
+?>
+
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
 
@@ -60,7 +109,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white" onclick="redirect()">
+                    <a href="./logout.php" class="nav-link text-white" onclick="redirect()">
                         <svg class="bi pe-none me-2" width="16" height="16">
                             <use xlink:href="#people-circle" />
                         </svg>
@@ -72,17 +121,47 @@
             <div class="dropdown">
                 <a class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false">
                     <img src="./assets/dist/img/placeholder.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>Hi, {username}</strong>
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        $username = $_SESSION['username'];
+                        echo "Hi, $username";
+                    } else {
+                        echo '-';
+                    }
+                    ?>
                 </a>
             </div>
         </div>
 
         <!-- Home Content -->
         <div class="container" id="homeSection">
-            <div class="row align-items-center">
+            <div class="row align-items-center mt-2">
                 <div class="col">
-                    <h3 class="fs-2 mt-2">Home</h3>
-                    <p class="">ini buat home</p>
+                    <h3 class="fs-2 mt-2">Pengaturan Akun</h3>
+                    <p class="">username saat ini:
+                        <?php
+                        if (isset($_SESSION['username'])) {
+                            $username = $_SESSION['username'];
+                            echo "$username";
+                        } else {
+                            echo '-';
+                        }
+                        ?>
+                    </p>
+                    <div class="mb-3 mt-5" style="width: 500px;">
+                        <label for="formFile" class="form-label">Username</label>
+                        <input class="form-control" type="text" id="formFile" name="image" readonly placeholder="<?php echo "$username" ?>">
+                    </div>
+
+                    <!-- change password -->
+                    <form action="akun.php" method="post">
+                        <div class="mb-3 mt-5" style="width: 500px;">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input class="form-control" type="password" id="newPassword" name="new_password" placeholder="Enter new password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -96,20 +175,45 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Image</th>
+                            <th scope="col">Image | OR Code</th>
                             <th scope="col">Encryption Key</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
-                            <td><img src="./assets/dist/img/img1.webp" class="w-100 shadow-1-strong rounded mb-2 mt-2 img-thumbnail" style="max-width: 35%;" alt="Boat on Calm Water" /></td>
-                            <td>6edba6d7d560ec5f34da9c0e13f44354</td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    Delete
-                                </button>
+                            <?php
+                            $username = "root";
+                            $password = "";
+                            $database = "stegano";
+                            $hostname = "localhost";
+
+                            $connection = mysqli_connect($hostname, $username, $password, $database);
+
+                            if (!$connection) {
+                                die("Connection failed: " . mysqli_connect_error());
+                            }
+
+                            $username = $_SESSION['username'];
+                            $tableName = $username . "stegano";
+                            $sql = "SELECT * FROM $tableName";
+                            $result = mysqli_query($connection, $sql);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<tr>";
+                                    echo "<th scope='row'>" . $row['id'] . "</th>";
+                                    echo "<td>" . $row['pathImg'] . "</td>";
+                                    echo "<td>" . $row['key_enkripsi'] . "</td>";
+                                    echo "<td><a href='./delete.php?id=" . $row['id'] . "' class='btn btn-danger' type='submit'>Delete</a></td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr>";
+                                echo "<td colspan='4'>No data found</td>";
+                                echo "</tr>";
+                            }
+                            ?>
                         </tr>
                     </tbody>
                 </table>

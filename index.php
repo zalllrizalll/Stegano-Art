@@ -25,7 +25,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="./stegano.php">Steganografi</a></li>
-                            <li><a class="dropdown-item" href="#">Verifikasi</a></li>
+                            <li><a class="dropdown-item" href="./verifikasi.php">Verifikasi</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
