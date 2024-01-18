@@ -60,6 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="./assets/dist/css/sidebars.css" rel="stylesheet">
 </head>
 
+<style>
+    .image-cell {
+        padding: 10px;
+        /* border: 1px solid #ccc; */
+    }
+
+    .image-cell img {
+        max-width: 30%;
+        height: auto;
+    }
+</style>
+
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -88,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="d-flex flex-nowrap">
         <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
             <a href="./index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <span class="fs-4">Nama App</span>
+                <span class="fs-4">Stegano Art</span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
@@ -203,9 +215,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     echo "<tr>";
                                     echo "<th scope='row'>" . $row['id'] . "</th>";
-                                    echo "<td>" . $row['pathImg'] . "</td>";
+                                    echo '<td style="padding: 10px;"> <img src="' . $row['pathImg'] . '" style="max-width: 30%; height: auto;"> </td>';
                                     echo "<td>" . $row['key_enkripsi'] . "</td>";
                                     echo "<td><a href='./delete.php?id=" . $row['id'] . "' class='btn btn-danger' type='submit'>Delete</a></td>";
+                                    echo "<td><a href='./download.php?id=" . $row['id'] . "' class='btn btn-danger' type='submit'>Download</a></td>";
                                     echo "</tr>";
                                 }
                             } else {

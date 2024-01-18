@@ -80,6 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insert data into the table
         $insertQuery = "INSERT INTO $tableName (pathImg, key_enkripsi) VALUES ('{$responseData['path']}', '{$responseData['encryption_key w/ HEX']}')";
         $conn->query($insertQuery);
+        $insertQuery2 = "INSERT INTO $tableName (pathImg, key_enkripsi) VALUES ('{$responseData['qr_path']}', 'NULL')";
+        $conn->query($insertQuery2);
 
         // Close the database connection
         $conn->close();
@@ -103,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home</title>
+    <title>Steganografi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
@@ -112,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./index.php">Nama App</a>
+            <a class="navbar-brand" href="./index.php">Stegano Art</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
