@@ -16,7 +16,7 @@ def encrypt_data(data, key):  # Fungsi untuk mengenkripsi data dengan AES
     return ciphertext
 
 
-def encode_QR(img, owner_name, creation_year, email, social_media_url, encryption_key):
+def encode_QR(img, owner_name, creation_year, email, social_media_url):
     # Ukuran QR Code adalah 30% dari ukuran gambar
     qr_size = int(min(img.size) * 0.3)
 
@@ -98,7 +98,7 @@ def encode_image():
         encoded_img = encode_lsb(
             img, owner_name, creation_year, email, social_media_url, encryption_key)
         qr_img = encode_QR(
-            img, owner_name, creation_year, email, social_media_url, encryption_key
+            img, owner_name, creation_year, email, social_media_url
         )
 
         # Convert encryption_key to hexadecimal string
