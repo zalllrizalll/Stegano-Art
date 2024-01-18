@@ -78,7 +78,10 @@
     </nav>
 
     <!-- Content -->
+<<<<<<< HEAD
     <!-- Content -->
+=======
+>>>>>>> 546ad6c627c01eee0d6a8ae9efc76ea023d00bc6
     <div class="container-fluid">
         <div class="row align-items-center mt-5">
             <div class="col-md-6" style='margin-left:150px'>
@@ -114,6 +117,7 @@
                     </div>
                 </div>
                 <div class="col">
+<<<<<<< HEAD
                     <div class="card" style="width: 25rem;">
                         <img src="./assets/dist/img/logo4.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -121,6 +125,15 @@
                         </div>
                     </div>
                 </div>
+=======
+                <div class="card" style="width: 25rem;">
+                    <img src="./assets/dist/img/logo4.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">Stegano Art memberikan prioritas tinggi pada keamanan pesan yang disematkan. Data sensitif Anda akan dilindungi dengan enkripsi tingkat tinggi dan memastikan bahwa pesan Anda aman dan hanya dapat diakses oleh penerima yang ditentukan.</p>
+                    </div>
+                </div>
+                </div>
+>>>>>>> 546ad6c627c01eee0d6a8ae9efc76ea023d00bc6
             </div>
         </div>
     </div>
@@ -209,7 +222,10 @@
             </div>
         </div>
     </footer>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 546ad6c627c01eee0d6a8ae9efc76ea023d00bc6
     <!-- Script -->
     <script>
         function redirect() {
