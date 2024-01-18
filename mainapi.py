@@ -39,13 +39,6 @@ def encode_QR(img, owner_name, creation_year, email, social_media_url, encryptio
     return img
 
 
-def text_to_binary(text):  # Fungsi untuk mengonversi teks ke dalam representasi biner
-    binary_result = ''
-    for char in text:
-        binary_result += format(ord(char), '08b')
-    return binary_result
-
-
 def encode_lsb(img, owner_name, creation_year, email, social_media_url, encryption_key):
 
     # Enkripsi owner_name, creation_year, email, dan social_media_url
