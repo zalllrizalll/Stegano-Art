@@ -28,10 +28,7 @@ if (isset($_GET['id'])) {
     $sql = "DELETE FROM $tableName WHERE id = $id";
 
     if (mysqli_query($connection, $sql)) {
-<<<<<<< HEAD
-=======
         echo "Record deleted successfully";
->>>>>>> 546ad6c627c01eee0d6a8ae9efc76ea023d00bc6
         header("Location: ./akun.php");
     } else {
         echo "Error deleting record: " . mysqli_error($connection);
